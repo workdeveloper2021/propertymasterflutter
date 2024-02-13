@@ -1,0 +1,12 @@
+com.ajinasokan.flutter_fgbg-jetified-annotation-experimental-1.1.0-0 C:\Users\Hp\.gradle\caches\transforms-3\02315cc9f75263553d2042718fc375ee\transformed\jetified-annotation-experimental-1.1.0\res
+com.ajinasokan.flutter_fgbg-jetified-window-1.0.0-beta04-1 C:\Users\Hp\.gradle\caches\transforms-3\076eb9235982ee06112d76594ea8585f\transformed\jetified-window-1.0.0-beta04\res
+com.ajinasokan.flutter_fgbg-jetified-window-java-1.0.0-beta04-2 C:\Users\Hp\.gradle\caches\transforms-3\99750bb863b6fe460a7b5da8686e778d\transformed\jetified-window-java-1.0.0-beta04\res
+com.ajinasokan.flutter_fgbg-core-1.6.0-3 C:\Users\Hp\.gradle\caches\transforms-3\d08c73bfb05384f2e52578171dbd141e\transformed\core-1.6.0\res
+com.ajinasokan.flutter_fgbg-main-4 C:\Users\Hp\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_fgbg-0.3.0\android\src\main\res
+com.ajinasokan.flutter_fgbg-release-5 C:\Users\Hp\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_fgbg-0.3.0\android\src\release\res
+com.ajinasokan.flutter_fgbg-pngs-6 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\generated\res\pngs\release
+com.ajinasokan.flutter_fgbg-resValues-7 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\generated\res\resValues\release
+com.ajinasokan.flutter_fgbg-rs-8 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\generated\res\rs\release
+com.ajinasokan.flutter_fgbg-mergeReleaseResources-9 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.ajinasokan.flutter_fgbg-mergeReleaseResources-10 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.ajinasokan.flutter_fgbg-merged_res-11 C:\Users\Hp\StudioProjects\propertymaster\build\flutter_fgbg\intermediates\merged_res\release

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "dev.fluttercommunity.plus.androidalarmmanager.android_alarm_manager_plus-merged_res-24:/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "dev.fluttercommunity.plus.androidalarmmanager.android_alarm_manager_plus-appcompat-1.6.1-17:/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "dev.fluttercommunity.plus.androidalarmmanager.android_alarm_manager_plus-merged_res-24:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "dev.fluttercommunity.plus.androidalarmmanager.android_alarm_manager_plus-appcompat-1.6.1-17:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]
