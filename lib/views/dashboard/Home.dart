@@ -9,6 +9,7 @@ import 'package:propertymaster/models/PropertyDataModel.dart';
 import 'package:propertymaster/utilities/AppColors.dart';
 import 'package:propertymaster/utilities/AppStrings.dart';
 import 'package:propertymaster/views/AddLead.dart';
+import 'package:propertymaster/views/HomeDashboardPropertySlider.dart';
 import 'package:propertymaster/views/ManageLeadList.dart';
 import 'package:propertymaster/views/authentication/loginRegisteredUser.dart';
 import 'package:propertymaster/views/home_slider.dart';
@@ -20,7 +21,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:propertymaster/utilities/Loader.dart';
 import 'package:propertymaster/utilities/Utility.dart';
-import 'package:propertymaster/utilities/Urls.dart';
+import 'package:propertymaster/utilities/Urls.dart' ;
 // apis
 
 class Home extends StatefulWidget {
@@ -34,7 +35,8 @@ class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   var searchController = TextEditingController();
   late String userID;
-  late String role;
+  String role = '';
+  String name = '';
   String type = "all";
   Data? realEstateCounts;
   List<Listing>? imgList = [];
@@ -51,6 +53,7 @@ class _HomeState extends State<Home> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userID = prefs.getString("userID") ?? '';
     role = prefs.getString("role") ?? '';
+    name = prefs.getString("name") ?? '';
     print('my userID is >>>>> {$userID}');
     print('my role is >>>>> {$role}');
     realEstateAPI(context);
@@ -67,40 +70,52 @@ class _HomeState extends State<Home> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            UserAccountsDrawerHeader(
+              accountName: Text(name),
+              accountEmail: Text(role),
+              decoration: const BoxDecoration(color: AppColors.colorSecondaryLight,),
+              currentAccountPicture: const CircleAvatar(
+                backgroundImage: AssetImage("assets/images/user.png"),
               ),
-              child: Text('Drawer Header'),
-            ),
-            const ListTile(
-              title: Text('Home'),
-            ),
-            const ListTile(
-              title: Text('Business'),
-            ),
-            const ListTile(
-              title: Text('School'),
             ),
             ListTile(
-              title: InkWell(
-                onTap: () async {
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setBool("isLogin", false);
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeftWithFade,
-                      alignment: Alignment.topCenter,
-                      duration: const Duration(milliseconds: 750),
-                      isIos: true,
-                      child: const LoginRegisteredUser(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: const Text('Logout'),
-              ),
+              leading: const Icon(Icons.home),
+              title: const Text("Home"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_box),
+              title: const Text("About"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.grid_3x3_outlined),
+              title: const Text("Products"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.contact_mail),
+              title: const Text("Contact"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setBool("isLogin", false);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    alignment: Alignment.topCenter,
+                    duration: const Duration(milliseconds: 750),
+                    isIos: true,
+                    child: const LoginRegisteredUser(),
+                  ),
+                      (route) => false,
+                );
+              },
             ),
           ],
         ),
@@ -191,212 +206,216 @@ class _HomeState extends State<Home> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.colorSecondaryLight,
       ),
-      body: Column(
-        children: [
-          imgList!.isEmpty
-              ? const SizedBox(
-                  height: 283.0,
-                  child: Center(
-                    child: Text(
-                      'No data yet !',
-                      style: TextStyle(color: AppColors.colorSecondary),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            imgList!.isEmpty
+                ? const SizedBox(
+                    height: 283.0,
+                    child: Center(
+                      child: Text(
+                        'No data yet !',
+                        style: TextStyle(color: AppColors.colorSecondary),
+                      ),
+                    ),
+                  )
+                : HomeSlider(imgList: imgList),
+            const SizedBox(height: 10.0,),
+            HomeDashboardPropertySlider(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeftWithFade,
+                            alignment: Alignment.topCenter,
+                            duration: const Duration(milliseconds: 750),
+                            isIos: true,
+                            child: const AddLead(),
+                          )
+                      );
+                    },
+                    highlightColor: AppColors.transparent,
+                    splashColor: AppColors.transparent,
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(10.0,),
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: AppColors.colorSecondary,
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: const Text(
+                        AppStrings.submitYourLead,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
-                )
-              : HomeSlider(imgList: imgList),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeftWithFade,
-                          alignment: Alignment.topCenter,
-                          duration: const Duration(milliseconds: 750),
-                          isIos: true,
-                          child: const AddLead(),
-                        )
-                    );
-                  },
-                  highlightColor: AppColors.transparent,
-                  splashColor: AppColors.transparent,
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.all(10.0,),
-                    width: MediaQuery.of(context).size.width * 1,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: AppColors.colorSecondary,
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                    child: const Text(
-                      AppStrings.submitYourLead,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w700,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  alignment: Alignment.topCenter,
+                                  duration: const Duration(milliseconds: 750),
+                                  isIos: true,
+                                  child: const ManageLeadList(title: AppStrings.totalLeads,page: 'totaltodaywork'),
+                                )
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 1,
+                                padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.carrotColorDark,
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0,),),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset('assets/icons/bell.png',width: 20.0,color: AppColors.white,),
+                                    const SizedBox(width: 5.0,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(AppStrings.todayWork,
+                                          style: TextStyle(color: AppColors.white,fontSize: 11.0,),
+                                        ),
+                                        const SizedBox(height: 5.0,),
+                                        Text(realEstateCounts == null ? '0' : realEstateCounts!.todaywork.toString(),
+                                          style: const TextStyle(color: AppColors.white,fontSize: 20.0,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 5.0,),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  alignment: Alignment.topCenter,
+                                  duration: const Duration(milliseconds: 750),
+                                  isIos: true,
+                                  child: const ManageLeadList(title: AppStrings.totalLeads,page: 'totalhotlisted'),
+                                )
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 1,
+                                padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
+                                decoration: const BoxDecoration(
+                                  color: Colors.lightBlue,
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0,),),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset('assets/icons/fire.png',width: 20.0,color: AppColors.white,),
+                                    const SizedBox(width: 5.0,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(AppStrings.hotListed,
+                                          style: TextStyle(color: AppColors.white,fontSize: 11.0,),
+                                        ),
+                                        const SizedBox(height: 5.0,),
+                                        Text(realEstateCounts == null ? '0' : realEstateCounts!.otherlead!.hotlisted.toString(),
+                                          style: const TextStyle(color: AppColors.white,fontSize: 20.0,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 5.0,),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            // Navigator.push(
+                            //     context,
+                            //     PageTransition(
+                            //       type: PageTransitionType.rightToLeftWithFade,
+                            //       alignment: Alignment.topCenter,
+                            //       duration: const Duration(milliseconds: 750),
+                            //       isIos: true,
+                            //       child: const HomeScreen(),
+                            //     )
+                            // );
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 1,
+                                padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
+                                decoration: const BoxDecoration(
+                                  color: Colors.indigo,
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0,),),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset('assets/icons/users-alt.png',width: 20.0,color: AppColors.white,),
+                                    const SizedBox(width: 5.0,),
+                                    const Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(AppStrings.totalBP2,
+                                          style: TextStyle(color: AppColors.white,fontSize: 11.0,),
+                                        ),
+                                        SizedBox(height: 5.0,),
+                                        Text('0',
+                                          style: TextStyle(color: AppColors.white,fontSize: 20.0,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                alignment: Alignment.topCenter,
-                                duration: const Duration(milliseconds: 750),
-                                isIos: true,
-                                child: const ManageLeadList(title: AppStrings.totalLeads,page: 'totaltodaywork'),
-                              )
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 1,
-                              padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
-                              decoration: const BoxDecoration(
-                                color: AppColors.carrotColorDark,
-                                borderRadius: BorderRadius.all(Radius.circular(5.0,),),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/icons/bell.png',width: 20.0,color: AppColors.white,),
-                                  const SizedBox(width: 5.0,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(AppStrings.todayWork,
-                                        style: TextStyle(color: AppColors.white,fontSize: 11.0,),
-                                      ),
-                                      const SizedBox(height: 5.0,),
-                                      Text(realEstateCounts == null ? '0' : realEstateCounts!.todaywork.toString(),
-                                        style: const TextStyle(color: AppColors.white,fontSize: 20.0,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 5.0,),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                alignment: Alignment.topCenter,
-                                duration: const Duration(milliseconds: 750),
-                                isIos: true,
-                                child: const ManageLeadList(title: AppStrings.totalLeads,page: 'totalhotlisted'),
-                              )
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 1,
-                              padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
-                              decoration: const BoxDecoration(
-                                color: Colors.lightBlue,
-                                borderRadius: BorderRadius.all(Radius.circular(5.0,),),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/icons/fire.png',width: 20.0,color: AppColors.white,),
-                                  const SizedBox(width: 5.0,),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(AppStrings.hotListed,
-                                        style: TextStyle(color: AppColors.white,fontSize: 11.0,),
-                                      ),
-                                      const SizedBox(height: 5.0,),
-                                      Text(realEstateCounts == null ? '0' : realEstateCounts!.otherlead!.hotlisted.toString(),
-                                        style: const TextStyle(color: AppColors.white,fontSize: 20.0,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 5.0,),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     PageTransition(
-                          //       type: PageTransitionType.rightToLeftWithFade,
-                          //       alignment: Alignment.topCenter,
-                          //       duration: const Duration(milliseconds: 750),
-                          //       isIos: true,
-                          //       child: const HomeScreen(),
-                          //     )
-                          // );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 1,
-                              padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,3.0,),
-                              decoration: const BoxDecoration(
-                                color: Colors.indigo,
-                                borderRadius: BorderRadius.all(Radius.circular(5.0,),),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Image.asset('assets/icons/users-alt.png',width: 20.0,color: AppColors.white,),
-                                  const SizedBox(width: 5.0,),
-                                  const Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(AppStrings.totalBP2,
-                                        style: TextStyle(color: AppColors.white,fontSize: 11.0,),
-                                      ),
-                                      SizedBox(height: 5.0,),
-                                      Text('0',
-                                        style: TextStyle(color: AppColors.white,fontSize: 20.0,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

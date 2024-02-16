@@ -33,4 +33,5 @@ com.example.propertymaster.app-packaged_res-31 C:\Users\Hp\StudioProjects\proper
 com.example.propertymaster.app-packaged_res-32 C:\Users\Hp\StudioProjects\propertymaster\build\fluttertoast\intermediates\packaged_res\debug
 com.example.propertymaster.app-packaged_res-33 C:\Users\Hp\StudioProjects\propertymaster\build\path_provider_android\intermediates\packaged_res\debug
 com.example.propertymaster.app-packaged_res-34 C:\Users\Hp\StudioProjects\propertymaster\build\shared_preferences_android\intermediates\packaged_res\debug
-com.example.propertymaster.app-packaged_res-35 C:\Users\Hp\StudioProjects\propertymaster\build\url_launcher_android\intermediates\packaged_res\debug
+com.example.propertymaster.app-packaged_res-35 C:\Users\Hp\StudioProjects\propertymaster\build\sqflite\intermediates\packaged_res\debug
+com.example.propertymaster.app-packaged_res-36 C:\Users\Hp\StudioProjects\propertymaster\build\url_launcher_android\intermediates\packaged_res\debug

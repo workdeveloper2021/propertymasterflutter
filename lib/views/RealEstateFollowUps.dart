@@ -241,16 +241,7 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                     children: [
                       Expanded(
                         flex: 1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.leadSources == null ? "" : widget.leadSources!),
-                            Text(
-                              widget.locationName == null ? "" : widget.locationName!,
-                              style: const TextStyle(fontSize: 16.0,color: AppColors.colorPrimaryDark,fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
+                        child: Text(widget.leadSources == null ? "" : widget.leadSources!),
                       ),
                       (widget.contact2 == null || widget.contact2!.isEmpty || widget.contact2 == '0' || widget.contact2 == "0")
                           ? InkWell(
@@ -281,12 +272,20 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                   const SizedBox(height: 5.0,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Expanded(
                         flex: 1,
                         child: Text(
+                          widget.locationName == null ? "" : widget.locationName!,
+                          style: const TextStyle(fontSize: 16.0,color: AppColors.colorPrimaryDark,fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
                           widget.location == null ? "" : widget.location!,
+                          textAlign: TextAlign.end,
                           style: const TextStyle(fontSize: 16.0,color: AppColors.colorPrimaryDark,fontWeight: FontWeight.w600),
                         ),
                       ),

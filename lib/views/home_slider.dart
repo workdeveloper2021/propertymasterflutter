@@ -130,7 +130,7 @@ class _HomeSliderState extends State<HomeSlider> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color:
-                      _current == index ? AppColors.colorPrimary : Colors.white,
+                      _current == index ? AppColors.colorSecondary : Colors.white,
                 ),
               );
             }).toList(),

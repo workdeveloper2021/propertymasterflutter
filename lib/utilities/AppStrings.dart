@@ -21,6 +21,7 @@ class AppStrings{
   static const String back                            = 'Back';
   static const String otpVerification                 = 'OTP Verification';
   static const String forgotPassword                  = 'Forgot Password ?';
+  static const String terrmsAndConditions             = 'Terrms & Conditions';
   static const String doNotHaveAccount                = 'Don’t Have Account ? Create Form Here';
   static const String alreadyHaveAccount              = 'Already Have Account ? Login';
   static const String getStarted                      = 'Get Started';
@@ -154,4 +155,5 @@ class AppStrings{
   static const String cityToast                       = 'Please Enter City Name';
   static const String leadSourceToast                 = 'Please Enter Lead Source';
   static const String sizeToast                       = 'Please Enter Size in SQFT';
+  static const String callForDetail                   = 'Call For Detail';
 }

@@ -143,24 +143,11 @@ class _ManageLeadListState extends State<ManageLeadList> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    leadList![index].leadSources == null ? "" : leadList![index].leadSources!,
-                                    style: TextStyle(
-                                      color: (leadList![index]?.isHot ?? '0') == '1' ? AppColors.white : AppColors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    leadList![index].locationName == null ? "" : leadList![index].locationName!,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: (leadList![index]?.isHot ?? '0') == '1' ? AppColors.white : AppColors.colorPrimaryDark,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
+                              child: Text(
+                                leadList![index].leadSources == null ? "" : leadList![index].leadSources!,
+                                style: TextStyle(
+                                  color: (leadList![index]?.isHot ?? '0') == '1' ? AppColors.white : AppColors.black,
+                                ),
                               ),
                             ),
                             (leadList![index].contact2 == null || leadList![index].contact2!.isEmpty || leadList![index].contact2 == '0' || leadList![index].contact2 == "0")
@@ -197,12 +184,24 @@ class _ManageLeadListState extends State<ManageLeadList> {
                         const SizedBox(height: 5.0,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
                               flex: 1,
                               child: Text(
+                                leadList![index].locationName == null ? "" : leadList![index].locationName!,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: (leadList![index]?.isHot ?? '0') == '1' ? AppColors.white : AppColors.colorPrimaryDark,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
                                 leadList![index].location == null ? "" : leadList![index].location!,
+                                textAlign: TextAlign.end,
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: (leadList![index]?.isHot ?? '0') == '1' ? AppColors.white : AppColors.colorPrimaryDark,

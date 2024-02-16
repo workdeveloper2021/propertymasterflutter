@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:propertymaster/utilities/AppColors.dart';
 import 'package:propertymaster/utilities/AppStrings.dart';
+import 'package:propertymaster/views/TermsAndConditions.dart';
 import 'package:propertymaster/views/authentication/Register.dart';
 // apis
 import 'dart:io';
@@ -70,13 +71,15 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
                   ),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
-              const SizedBox(height: 10.0,),
+              // SizedBox(height: MediaQuery.of(context).size.height * 0.15,),
+              // const SizedBox(height: 10.0,),
+              Image.asset('assets/images/logo2-transformed.png',width: 150.0,),
+              // const SizedBox(height: 10.0,),
               const Text(
                 AppStrings.loginTitle,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 35.0,
+                  fontSize: 30.0,
                   color: AppColors.black,
                 ),
               ),
@@ -232,6 +235,31 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
                 splashColor: AppColors.transparent,
                 child: const Text(
                   AppStrings.forgotPassword,
+                  style: TextStyle(
+                    color: AppColors.colorPrimaryDark,
+                    fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20.0,),
+              // login button ends
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        alignment: Alignment.topCenter,
+                        duration: const Duration(milliseconds: 750),
+                        isIos: true,
+                        child: TermsAndConditions(),
+                      )
+                  );
+                },
+                highlightColor: AppColors.transparent,
+                splashColor: AppColors.transparent,
+                child: const Text(
+                  AppStrings.terrmsAndConditions,
                   style: TextStyle(
                     color: AppColors.colorPrimaryDark,
                     fontWeight: FontWeight.w500
@@ -411,6 +439,7 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
           prefs.setBool("isLogin", true);
           prefs.setString("userID", response.data!.userId!);
           prefs.setString("role", response.data!.role!);
+          prefs.setString("name", response.data!.name!);
           Navigator.pushAndRemoveUntil(
               context,
               PageTransition(

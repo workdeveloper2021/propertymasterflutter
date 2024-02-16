@@ -96,17 +96,17 @@ class _OTPVerificationState extends State<OTPVerification> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeftWithFade,
-                          alignment: Alignment.topCenter,
-                          duration: const Duration(milliseconds: 750),
-                          isIos: true,
-                          child: Dashboard(bottomIndex: 0),
-                        ),
-                      (route) => false,
-                    );
+                    // Navigator.pushAndRemoveUntil(
+                    //     context,
+                    //     PageTransition(
+                    //       type: PageTransitionType.rightToLeftWithFade,
+                    //       alignment: Alignment.topCenter,
+                    //       duration: const Duration(milliseconds: 750),
+                    //       isIos: true,
+                    //       child: Dashboard(bottomIndex: 0),
+                    //     ),
+                    //   (route) => false,
+                    // );
                   },
                   child: const Align(
                     alignment: Alignment.center,

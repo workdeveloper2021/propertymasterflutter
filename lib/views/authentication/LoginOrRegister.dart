@@ -17,8 +17,19 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
-      body: SafeArea(
+      // backgroundColor: AppColors.white,
+      body: Container(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xbeed6a45),
+              AppColors.colorSecondaryLight,
+            ],
+          ),
+        ),
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.2),
           child: Center(
@@ -26,35 +37,40 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/images/logo.png',width: 150.0,),
+                Image.asset('assets/images/logo.png',width: 200.0,),
                 const SizedBox(height: 10.0,),
-                const Text(AppStrings.pleaseSelectTypeToLogin),
+                const Text(
+                  AppStrings.pleaseSelectTypeToLogin,
+                  style: TextStyle(
+                    color: AppColors.white,
+                  ),
+                ),
                 const SizedBox(height: 20.0,),
                 InkWell(
                   onTap: () {
                     Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        alignment: Alignment.topCenter,
-                        duration: const Duration(milliseconds: 750),
-                        isIos: true,
-                        child: const LoginRegisteredUser(),
-                      )
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          alignment: Alignment.topCenter,
+                          duration: const Duration(milliseconds: 750),
+                          isIos: true,
+                          child: const LoginRegisteredUser(),
+                        )
                     );
                   },
                   child: Container(
                     height: 50.0,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    // margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
+                    width: MediaQuery.of(context).size.width * 1,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10.0,
                     ),
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0,),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.black38,
-                        width: 1.0,
-                        style: BorderStyle.solid
+                          color: Colors.black38,
+                          width: 1.0,
+                          style: BorderStyle.solid
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                       color: Colors.white,
@@ -69,19 +85,19 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                             width: 23.0,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 1,
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 1,
-                            width: MediaQuery.of(context).size.width * 1,
-                            child: const Center(child: Text(AppStrings.registeredUser)),
-                          ),
+                          child: Text(AppStrings.registeredUser),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Icon(Icons.double_arrow_outlined),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0,),
+                const SizedBox(height: 20.0,),
                 InkWell(
                   onTap: () {
                     Navigator.push(
@@ -97,11 +113,11 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                   },
                   child: Container(
                     height: 50.0,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    // margin: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 0.0),
+                    width: MediaQuery.of(context).size.width * 1,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10.0,
                     ),
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0,),
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Colors.black38,
@@ -118,21 +134,22 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                           padding: const EdgeInsets.only(right: 10.0),
                           child: SvgPicture.asset(
                             'assets/icons/free_user.svg',
-                            width: 30.0,
+                            width: 23.0,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           flex: 1,
-                          child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 1,
-                            width: MediaQuery.of(context).size.width * 1,
-                            child: const Center(child: Text(AppStrings.freeUser)),
-                          ),
+                          child: Text(AppStrings.freeUser),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: Icon(Icons.double_arrow_outlined),
                         ),
                       ],
                     ),
                   ),
                 ),
+                const SizedBox(height: 10.0,),
               ],
             ),
           ),
