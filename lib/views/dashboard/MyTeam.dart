@@ -13,8 +13,8 @@ class MyTeam extends StatefulWidget {
 class _MyTeamState extends State<MyTeam> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("ResaleDeal"),
+    return const Center(
+      child: Text(AppStrings.myTeam),
     );
     return Scaffold(
       appBar: AppBar(

@@ -42,6 +42,10 @@ class _ManageLeadListState extends State<ManageLeadList> {
   bool _isLoadMoreRunning = false;
   List<Listing>? leadList = [];
   ScrollController scrollController = ScrollController();
+  var searchController = TextEditingController();
+  String searchParameter = '';
+  bool onLoadFocusOnTextFormFieldForAll = true;
+  bool onLoadFocusOnTextFormFieldForOthers = false;
   @override
   void initState() {
     super.initState();
@@ -64,13 +68,96 @@ class _ManageLeadListState extends State<ManageLeadList> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.whitish,
+        // appBar: AppBar(
+        //   backgroundColor: AppColors.colorSecondaryLight,
+        //   iconTheme: const IconThemeData(color: AppColors.white,),
+        //   title: Text(
+        //     widget.title,
+        //     style: const TextStyle(color: AppColors.white,),
+        //   ),
+        // ),
         appBar: AppBar(
-          backgroundColor: AppColors.colorSecondaryLight,
-          iconTheme: const IconThemeData(color: AppColors.white,),
-          title: Text(
-            widget.title,
-            style: const TextStyle(color: AppColors.white,),
+          toolbarHeight: 140.0,
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.only(top: 50.0,left: 10.0,right: 10.0,),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: SvgPicture.asset('assets/icons/back2.svg',color: AppColors.white,width: 25.0,height: 25.0,),
+                    ),
+                    const SizedBox(width: 10.0,),
+                    Text(widget.title,style: const TextStyle(fontSize: 22.0,color: AppColors.white,),),
+                  ],
+                ),
+                const SizedBox(height: 20.0,),
+                Container(
+                  height: 50.0,
+                  width: MediaQuery.of(context).size.width * 1,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: AppColors.colorSecondary,
+                        width: 1.0,
+                        style: BorderStyle.solid
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: SvgPicture.asset(
+                          'assets/icons/search.svg',
+                          width: 23.0,
+                          color: AppColors.colorSecondary,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: TextFormField(
+                          onChanged: (val){
+                            print("val onChanged is ------------------$val");
+                            setState(() => searchParameter = val);
+                            realEstateDetailListingFirstLoadAPI(context,false);
+                          },
+                          onFieldSubmitted: (val) {
+                            print("val onSubmitted is ------------------$val");
+                            setState(() => searchParameter = val);
+                            realEstateDetailListingFirstLoadAPI(context,false);
+                          },
+                          controller: searchController,
+                          autofocus: widget.page == 'all' ? onLoadFocusOnTextFormFieldForAll : onLoadFocusOnTextFormFieldForOthers,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                            fontSize: 14.0, color: AppColors.black,
+                          ),
+                          cursorColor: AppColors.textColorGrey,
+                          decoration: const InputDecoration(
+                            hintText: AppStrings.searchLeads,
+                            hintStyle: TextStyle(
+                              fontSize: 14.0,
+                              color: AppColors.textColorGrey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
+          automaticallyImplyLeading: false,
+          backgroundColor: AppColors.colorSecondaryLight,
         ),
         body: _isFirstLoadRunning ?
           const Center(
@@ -511,6 +598,7 @@ class _ManageLeadListState extends State<ManageLeadList> {
       request.fields['page'] =  widget.page;
       request.fields['length'] =  _limit.toString();
       request.fields['start'] =  _page.toString();
+      request.fields['searchParameter'] = searchParameter;
       print(request.fields);
       var response = await request.send();
       if(isLoad){
@@ -558,6 +646,7 @@ class _ManageLeadListState extends State<ManageLeadList> {
       request.fields['page'] =  widget.page;
       request.fields['length'] =  _limit.toString();
       request.fields['start'] =  _page.toString();
+      request.fields['searchParameter'] = searchParameter;
       print(request.fields);
       var response = await request.send();
       // Loader.ProgressloadingDialog(context, false);

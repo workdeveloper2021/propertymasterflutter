@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:propertymaster/models/RealEstateModel.dart';
@@ -30,6 +31,7 @@ class _ManageLeadState extends State<ManageLead> {
   late String role;
   String type = "all";
   Data? realEstateCounts;
+  var searchController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -53,11 +55,76 @@ class _ManageLeadState extends State<ManageLead> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.colorSecondaryLight,
-        title: const Text(
-          AppStrings.manageLead,
-          style: TextStyle(color: AppColors.white,),
+        toolbarHeight: 140.0,
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(top: 50.0,left: 10.0,right: 10.0,),
+          child: Column(
+            children: [
+              const Row(
+                children: [
+                  // const SizedBox(width: 10.0,),
+                  Text(AppStrings.manageLead,style: TextStyle(fontSize: 22.0,color: AppColors.white,),),
+                ],
+              ),
+              const SizedBox(height: 20.0,),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        alignment: Alignment.topCenter,
+                        duration: const Duration(milliseconds: 750),
+                        isIos: true,
+                        child: const ManageLeadList(title: AppStrings.totalLeads,page: 'all'),
+                      )
+                  );
+                },
+                child: Container(
+                  height: 50.0,
+                  width: MediaQuery.of(context).size.width * 1,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: AppColors.colorSecondary,
+                        width: 1.0,
+                        style: BorderStyle.solid
+                    ),
+                    borderRadius: BorderRadius.circular(5.0),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: SvgPicture.asset(
+                          'assets/icons/search.svg',
+                          width: 23.0,
+                        ),
+                      ),
+                      const Expanded(
+                        flex: 1,
+                        child: Text(
+                          AppStrings.searchLeads,
+                          style: TextStyle(
+                          fontSize: 14.0,
+                          color: AppColors.textColorGrey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.colorSecondaryLight,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),

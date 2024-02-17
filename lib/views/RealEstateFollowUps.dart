@@ -341,15 +341,24 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              (followupList![index].type == null || followupList![index].type == "") ? "Call" : followupList![index].type!,
-                              style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w700),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                followupList![index].type == null ? "" : followupList![index].type!,
+                                style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.start,
+                              ),
                             ),
-                            // const Text("2023-07-15",),
-                            Text(Utilities().DatefomatToReferDateWithTime("yyyy-MM-dd HH:mm:ss",followupList![index].insertDate!),),
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                Utilities().DatefomatToReferDateWithTime("yyyy-MM-dd HH:mm:ss",followupList![index].insertDate!),
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 5.0,),
@@ -365,7 +374,7 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                                     : const SizedBox(height: 5.0,),
                                 Text("Date Of Birth : ${followupList![index].dob!}",),
                                 const SizedBox(height: 5.0,),
-                                Text("Project/Colony Name : ${followupList![index].townshipName!}",),
+                                Text(followupList![index].townshipName == null ? "Project/Colony Name : " : "Project/Colony Name : ${followupList![index].townshipName!}",),
                                 const SizedBox(height: 5.0,),
                                 Text("Plot Size. : ${followupList![index].plotSize!}",),
                                 const SizedBox(height: 5.0,),
@@ -373,7 +382,7 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                                 const SizedBox(height: 5.0,),
                                 Text( followupList![index].bookingDate != "0000-00-00" ? "Booking Date : ${followupList![index].bookingDate!}" : "Booking Date : ",),
                                 const SizedBox(height: 5.0,),
-                                Text( "Booking Remark : ${followupList![index].remark!}",),
+                                Text( followupList![index].remark == null ? "Booking Remark : " : "Booking Remark : ${followupList![index].remark!}",),
                                 const SizedBox(height: 5.0,),
                               ],
                         ) else if (followupList![index].type == 'Registered') Column(
