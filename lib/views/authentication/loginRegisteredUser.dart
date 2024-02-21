@@ -3,18 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:propertymaster/models/ForgotPasswordModel.dart';
 import 'package:propertymaster/utilities/AppColors.dart';
 import 'package:propertymaster/utilities/AppStrings.dart';
 import 'package:propertymaster/views/TermsAndConditions.dart';
 import 'package:propertymaster/views/authentication/Register.dart';
 // apis
-import 'dart:io';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:propertymaster/utilities/Loader.dart';
 import 'package:propertymaster/utilities/Utility.dart';
 import 'package:propertymaster/utilities/Urls.dart';
+import 'package:propertymaster/views/authentication/otp.dart';
 import 'package:propertymaster/views/dashboard/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:propertymaster/models/LoginModel.dart';
@@ -230,7 +231,10 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
               const SizedBox(height: 20.0,),
               // login button ends
               InkWell(
-                onTap: () => forgotPasswordModal(),
+                onTap: () {
+                  phoneNumberController.clear();
+                  forgotPasswordModal();
+                },
                 highlightColor: AppColors.transparent,
                 splashColor: AppColors.transparent,
                 child: const Text(
@@ -383,23 +387,35 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
                   ],
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 1,
-                //height: MediaQuery.of(context).size.height * 0.06,
-                height: 50.0,
-                // width: 343.0,
-                decoration: BoxDecoration(
-                  color: AppColors.colorSecondary,
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: const Text(
-                  AppStrings.sendOTP,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w700,
+              InkWell(
+                onTap: () async {
+                  String phoneNumber = phoneNumberController.text;
+                  if(phoneNumber.isEmpty){
+                    Utilities().toast(AppStrings.phoneToast);
+                  } else if(phoneNumber.length != 10){
+                    Utilities().toast(AppStrings.phoneValidToast2);
+                  } else{
+                    sendOTPAPI(context, phoneNumber);
+                  }
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 1,
+                  //height: MediaQuery.of(context).size.height * 0.06,
+                  height: 50.0,
+                  // width: 343.0,
+                  decoration: BoxDecoration(
+                    color: AppColors.colorSecondary,
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  child: const Text(
+                    AppStrings.sendOTP,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
@@ -459,4 +475,46 @@ class _LoginRegisteredUserState extends State<LoginRegisteredUser> {
     }
   }
   // login api
+  // sendOTPAPI
+  Future<void> sendOTPAPI(BuildContext context, String phoneNumber) async {
+    Loader.ProgressloadingDialog(context, true);
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(Urls.sendOtp),
+      );
+      Map<String, String> header = {
+        "content-type": "application/json",
+        "accept": "application/json",
+        "x-api-key" : Utilities.xApiKey,
+      };
+      request.headers.addAll(header);
+      request.fields['mobile'] =  phoneNumber;
+      var response = await request.send();
+      Loader.ProgressloadingDialog(context, false);
+      response.stream.transform(convert.utf8.decoder).listen((event) async {
+        print(Urls.sendOtp);
+        Map<String, dynamic> map = convert.jsonDecode(event);
+        ForgotPasswordModel response = await ForgotPasswordModel.fromJson(map);
+        Utilities().toast(response.message);
+        if(response.status == true){
+          Navigator.of(context).pop();
+          await Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                alignment: Alignment.topCenter,
+                duration: const Duration(milliseconds: 750),
+                isIos: true,
+                child: Otp(phoneNumber: phoneNumber),
+              )
+          );
+        }
+      });
+    } catch (e) {
+      Loader.ProgressloadingDialog(context, false);
+      Utilities().toast('error: $e');
+    }
+  }
+  // sendOTPAPI
 }

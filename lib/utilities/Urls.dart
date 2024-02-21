@@ -16,4 +16,7 @@ class Urls {
   static const leadSourceListUrl = "${baseUrl}lead_source";
   static const addContact2Url = "${baseUrl}add_contact_to_lead";
   static const propertyDataUrl = "${baseUrl}property_data";
+  static const sendOtp = "${baseUrl}sendOtp";
+  static const otpVerfication = "${baseUrl}otpVerfication";
+  static const updatePassword = "${baseUrl}updatePassword";
 }

@@ -22,6 +22,8 @@ class AppStrings{
   static const String back                            = 'Back';
   static const String otpVerification                 = 'OTP Verification';
   static const String forgotPassword                  = 'Forgot Password ?';
+  static const String resetPassword                   = 'Reset Password';
+  static const String resetYourPassword               = 'Reset New Password';
   static const String terrmsAndConditions             = 'Terrms & Conditions';
   static const String doNotHaveAccount                = 'Don’t Have Account ? Create Form Here';
   static const String alreadyHaveAccount              = 'Already Have Account ? Login';
@@ -30,6 +32,12 @@ class AppStrings{
   static const String forgotPasswordDescription       = 'Please Enter Your Registered Mobile Number and We Will Send You an OTP For Reset Your Password.';
   static const String phoneNumber                     = 'Phone Number';
   static const String sendOTP                         = 'Send OTP';
+  static const String otpToast                        = 'Please Enter Otp';
+  static const String otpValidToast                   = 'Please Enter Valid Otp.';
+  static const String didntReceiveCode                = 'Did’nt receive the code ?';
+  static const String resendANewCode                  = 'Resend a new code';
+  static const String verifyYourNumber                = 'Verify your number';
+  static const String enterYourOtpBelow               = 'Enter your OTP code below';
   static const String logIn                           = 'Log In';
   static const String signUp                          = 'Sign Up';
   static const String verifyAndContinue               = 'Verify And Continue';
@@ -144,9 +152,12 @@ class AppStrings{
   static const String residentialAddressToast         = 'Please Enter residential Address';
   // static const String commentToast                    = 'Please Enter Comment';
   static const String passwordToast                   = 'Please Enter Password';
+  static const String cofirmPasswordToast             = 'Please Enter Confirm Password';
+  static const String passwordcofirmPasswordToast     = 'Passwords do not match. Please try again.';
   static const String fullNameToast                   = 'Please Enter Full Name';
   static const String contact1Toast                   = 'Please Enter Contact 1';
   static const String phoneToast                      = 'Please Enter Phone Number';
+  static const String phoneValidToast2                = 'Please put 10 digit mobile number';
   static const String contact1ValidToast              = 'Please Enter Valid Contact 1';
   static const String phoneValidToast                 = 'Please Enter Valid Phone Number';
   static const String contact2Toast                   = 'Please Enter Contact 2';

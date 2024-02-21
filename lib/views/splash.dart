@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:propertymaster/views/dashboard/dashboard.dart';
 import 'package:propertymaster/views/onboarding.dart';
@@ -22,6 +23,7 @@ class _SplashState extends State<Splash> {
   }
   Future<void> sharePref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     if(prefs.getBool('isLogin') == true){
       goToScreen(Dashboard(bottomIndex: 0));
     }else{

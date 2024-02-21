@@ -347,7 +347,7 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                             Expanded(
                               flex: 1,
                               child: Text(
-                                followupList![index].type == null ? "" : followupList![index].type!,
+                                followupList![index].type == null ? "" : followupList![index].type == "" ? "Call" : followupList![index].type!,
                                 style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w700),
                                 textAlign: TextAlign.start,
                               ),
@@ -372,13 +372,13 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                                 (followupList![index].nameOfBooking == null)
                                     ? Container()
                                     : const SizedBox(height: 5.0,),
-                                Text("Date Of Birth : ${followupList![index].dob!}",),
+                                Text( followupList![index].dob == null ? "Date Of Birth : " : "Date Of Birth : ${followupList![index].dob!}",),
                                 const SizedBox(height: 5.0,),
                                 Text(followupList![index].townshipName == null ? "Project/Colony Name : " : "Project/Colony Name : ${followupList![index].townshipName!}",),
                                 const SizedBox(height: 5.0,),
-                                Text("Plot Size. : ${followupList![index].plotSize!}",),
+                                Text(followupList![index].plotSize == null ? "Plot Size. : " : "Plot Size. : ${followupList![index].plotSize!}",),
                                 const SizedBox(height: 5.0,),
-                                Text( "Booking Amount : ${followupList![index].bookingAmt!}",),
+                                Text( followupList![index].bookingAmt == null ? "Booking Amount : " : "Booking Amount : ${followupList![index].bookingAmt!}",),
                                 const SizedBox(height: 5.0,),
                                 Text( followupList![index].bookingDate != "0000-00-00" ? "Booking Date : ${followupList![index].bookingDate!}" : "Booking Date : ",),
                                 const SizedBox(height: 5.0,),
@@ -389,13 +389,13 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Registered Name : ${followupList![index].registeredName!}",),
+                              Text(followupList![index].registeredName == null ? "Registered Name : " : "Registered Name : ${followupList![index].registeredName!}",),
                               const SizedBox(height: 5.0,),
-                              Text("Registered Number : ${followupList![index].registeredNumber!}",),
+                              Text(followupList![index].registeredNumber == null ? "Registered Number : " : "Registered Number : ${followupList![index].registeredNumber!}",),
                               const SizedBox(height: 5.0,),
-                              Text("Date of Registration : ${followupList![index].dateOfRegistration!}",),
+                              Text(followupList![index].dateOfRegistration == null ? "Date of Registration : " : "Date of Registration : ${followupList![index].dateOfRegistration!}",),
                               const SizedBox(height: 5.0,),
-                              Text("Registered Remark : ${followupList![index].remark!}",),
+                              Text(followupList![index].remark == null ? "Registered Remark : " : "Registered Remark : ${followupList![index].remark!}",),
                               const SizedBox(height: 5.0,),
                             ],
                         ) else Container(),
@@ -411,36 +411,38 @@ class _RealEstateFollowUpsState extends State<RealEstateFollowUps> {
               },
             ),
             const SizedBox(height: 10.0,),
-            InkWell(
-              onTap: () => addFollowUpModal(reasonPlaceholder, selectedDate, selectedTime, selectedBookingDate, selectedDateOfRegistration),
-              // onTap: () => print(selectedDate),
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: AppColors.colorSecondary,
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add,color: AppColors.white),
-                    SizedBox(width: 10.0),
-                    Text(
-                      AppStrings.addFollowUp,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w700,
+            widget.page != 'all'
+                ? InkWell(
+                    onTap: () => addFollowUpModal(reasonPlaceholder, selectedDate, selectedTime, selectedBookingDate, selectedDateOfRegistration),
+                    // onTap: () => print(selectedDate),
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: AppColors.colorSecondary,
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add,color: AppColors.white),
+                          SizedBox(width: 10.0),
+                          Text(
+                            AppStrings.addFollowUp,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : Container(),
           ],
         ),
       ),
